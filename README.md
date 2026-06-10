@@ -68,7 +68,7 @@ This project is licensed under the MIT License.
 - **Email:** manoharmuli18@gmail.com
 - **GitHub:** https://github.com/manoharmuli18-tech
 - **LinkedIn:** https://www.linkedin.com/in/muli-manohar-57134a408
-- **Portfolio:** https://manoharmuli18-tech.github.io/portfolio/
+- **Portfolio:** https://manoharmuli18-tech.github.io/portifolio/
 - **status:-** open to collaboration & freelance automation gigs!
 
 ---
