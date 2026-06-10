@@ -64,9 +64,9 @@ see the [LICENSE](LICENSE) file.
 
 ## About the Developer:-
 
-**Name:** Venkata Manohar Reddy M
-**Email:** manoharmuli18@gmail.com
-**GitHub:** https://github.com/manoharmuli18-tech
+-**Name:** Venkata Manohar Reddy M
+-**Email:** manoharmuli18@gmail.com
+-**GitHub:** https://github.com/manoharmuli18-tech
 **LinkedIn:** https://www.linkedin.com/in/muli-manohar-57134a408
 **Portfolio:** https://manoharmuli18-tech.github.io/portfolio/
 **status:-** open to collaboration & freelance automation gigs!
