@@ -55,9 +55,9 @@
 - Detailed explanation and my rectified mistakes:-
 - https://homeautomationesp32.blogspot.com/2026/06/home-automation-using-esp32.html
 
-## License:-
+## Licence:-
 
-This project is licensed under the MIT License.
+This project is licenced under the MIT License.
 - see the [LICENSE](LICENSE) file.
 
 ---
