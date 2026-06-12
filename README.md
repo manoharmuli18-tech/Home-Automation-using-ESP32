@@ -51,8 +51,8 @@
 - check is it button's appliance(bulb,fan) are on/off in time or not
 - check for modifications
 
-## My Experiance:-
-- Detailed explaination and my rectified mistakes:-
+## My Experience:-
+- Detailed explanation and my rectified mistakes:-
 - https://homeautomationesp32.blogspot.com/2026/06/home-automation-using-esp32.html
 
 ## License:-
