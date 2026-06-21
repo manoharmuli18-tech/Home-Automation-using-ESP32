@@ -22,17 +22,29 @@
 ## Components Required:-
 
 - ESP32 Development Board (or ESP32 cam module)
-- Relay Module (4 Channel)
-- Wi-Fi Network(Manohar)
+- Wi-Fi Network(ESP,darkking--password)
 - Mobile Phone
-- Power Supply (5V)
+- Power Supply (6V)
 - Connecting Wires
 - Electrical Loads (Bulbs, Fans, etc.)
 
+## Hardware connection:-
+- connect GPIO-13 to LED-1 long leg
+- connect GPIO-12 to LED-2 long leg
+- connect GPIO-14 to LED-3 long leg
+- connect GPIO-15 to LED-4 long leg
+- connect all short leds of LED,ESP32 GPIO-0,TTl adaptor GND to ESP32 GND pin (for sharing same ground)
+- connect ESP32-RX pin to TTl adaptor-TX pin
+- connect ESP32-TX pin to TTl adaptor-RX pin
+- connect ESP32-5V pin to TTl adaptor-5V pin
+- connect TTL adaptor to PC
+  
 ## Installation:-
 
 - Open the project in Arduino IDE.
-- Install ESP32 board support.
+- Install Thimcker-AI ESP32 CAM  board support.
+- Uploard speed is 115,200
+- select port as COM-7
 - Connect ESp32 to PC via USB cable (or)TTL adaptor
 - compile and Upload code to ESP32
 - Power the ESP32 and connect your mobile phone to the same Wi-Fi network.
