@@ -1,73 +1,77 @@
 #include <WiFi.h>
-#include <WebServer.h>
 
-const char* ssid = "Manohar";           //same hotsot connect to both esp32 and phone or else some issues come
-const char* password = "Manohar";
+const char* ssid = "ESP";              //this is my mobile-hotspot name
+const char* password = "darkking";       //it's password
 
-WebServer server(80);
+#define LED1 13                  //led's long leg connected to esp32 (GPIO-13 pin)
+#define LED2 12
+#define LED3 14
+#define LED4 15
 
-const int led1 = 16;
-const int led2 = 17;
-const int led3 = 18;
-const int led4 = 19;
-
-void handleRoot() {
-  String html = "<html><body>";
-  html += "<h2>ESP32 LED Control</h2>";
-
-  html += "<p><a href='/led1on'><button>LED1 ON</button></a>";
-  html += "<a href='/led1off'><button>LED1 OFF</button></a></p>";
-
-  html += "<p><a href='/led2on'><button>LED2 ON</button></a>";
-  html += "<a href='/led2off'><button>LED2 OFF</button></a></p>";
-
-  html += "<p><a href='/led3on'><button>LED3 ON</button></a>";
-  html += "<a href='/led3off'><button>LED3 OFF</button></a></p>";
-
-  html += "<p><a href='/led4on'><button>LED4 ON</button></a>";
-  html += "<a href='/led4off'><button>LED4 OFF</button></a></p>";
-
-  html += "</body></html>";
-
-  server.send(200, "text/html", html);
-}
+WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
 
-  pinMode(led1, OUTPUT);
-  pinMode(led2, OUTPUT);
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
 
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-
-  Serial.println();
+  Serial.println("\nConnected!");
   Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());         //use this ip address in phone to open control portal
-
-  server.on("/", handleRoot);
-
-  server.on("/led1on", [](){ digitalWrite(led1, HIGH); handleRoot(); });
-  server.on("/led1off", [](){ digitalWrite(led1, LOW); handleRoot(); });
-
-  server.on("/led2on", [](){ digitalWrite(led2, HIGH); handleRoot(); });
-  server.on("/led2off", [](){ digitalWrite(led2, LOW); handleRoot(); });
-
-  server.on("/led3on", [](){ digitalWrite(led3, HIGH); handleRoot(); });
-  server.on("/led3off", [](){ digitalWrite(led3, LOW); handleRoot(); });
-
-  server.on("/led4on", [](){ digitalWrite(led4, HIGH); handleRoot(); });
-  server.on("/led4off", [](){ digitalWrite(led4, LOW); handleRoot(); });
+  Serial.println(WiFi.localIP());
 
   server.begin();
 }
 
 void loop() {
-  server.handleClient();
+  WiFiClient client = server.available();
+  if (client) {
+    String request = client.readStringUntil('\r');
+    client.flush();
+
+    if (request.indexOf("/LED1=ON") != -1) digitalWrite(LED1, HIGH);
+    if (request.indexOf("/LED1=OFF") != -1) digitalWrite(LED1, LOW);
+    if (request.indexOf("/LED2=ON") != -1) digitalWrite(LED2, HIGH);
+    if (request.indexOf("/LED2=OFF") != -1) digitalWrite(LED2, LOW);
+    if (request.indexOf("/LED3=ON") != -1) digitalWrite(LED3, HIGH);
+    if (request.indexOf("/LED3=OFF") != -1) digitalWrite(LED3, LOW);
+    if (request.indexOf("/LED4=ON") != -1) digitalWrite(LED4, HIGH);
+    if (request.indexOf("/LED4=OFF") != -1) digitalWrite(LED4, LOW);
+
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-type:text/html");
+    client.println();
+    client.println("<!DOCTYPE html><html><body style='text-align:center;font-family:sans-serif;'>");
+    client.println("<h1>ESP32-CAM 4-LED Control</h1>");
+
+    client.println("<h3>LED 1</h3>");
+    client.println("<a href=\"/LED1=ON\"><button style='padding:15px;font-size:18px;'>ON</button></a> ");
+    client.println("<a href=\"/LED1=OFF\"><button style='padding:15px;font-size:18px;'>OFF</button></a>");
+
+    client.println("<h3>LED 2</h3>");
+    client.println("<a href=\"/LED2=ON\"><button style='padding:15px;font-size:18px;'>ON</button></a> ");
+    client.println("<a href=\"/LED2=OFF\"><button style='padding:15px;font-size:18px;'>OFF</button></a>");
+
+    client.println("<h3>LED 3</h3>");
+    client.println("<a href=\"/LED3=ON\"><button style='padding:15px;font-size:18px;'>ON</button></a> ");
+    client.println("<a href=\"/LED3=OFF\"><button style='padding:15px;font-size:18px;'>OFF</button></a>");
+
+    client.println("<h3>LED 4</h3>");
+    client.println("<a href=\"/LED4=ON\"><button style='padding:15px;font-size:18px;'>ON</button></a> ");
+    client.println("<a href=\"/LED4=OFF\"><button style='padding:15px;font-size:18px;'>OFF</button></a>");
+
+    client.println("</body></html>");
+    client.stop();
+  }
 }
